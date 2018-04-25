@@ -1,25 +1,17 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from 'selenium-webdriver/http';
+
 import { DevApiPath } from '../dependencyInjection/tokens';
 import { Event } from '../models/event';
+import { EventsResponse } from '../models/eventsResponse';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class EventsService {
-  constructor(private http: HttpClient, @Inject(DevApiPath)apiPath: string) {}
+  constructor(private http: HttpClient) {}
 
-  public getAllEvents(): Event[] {
-    return [];
-  }
+  private apiPath = 'https://48tof4n3u3.execute-api.us-east-2.amazonaws.com/dev/';
 
-  public getEvents(): Event[] {
-    return [];
-  }
-
-  public getBirths(): Event[] {
-    return [];
-  }
-
-  public getDeaths(): Event[] {
-    return [];
+  public getAllEvents() {
+    return this.http.get<HttpResponse<EventsResponse>>(`${this.apiPath}getevents`);
   }
 }
