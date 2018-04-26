@@ -28,6 +28,6 @@ export class AppComponent implements OnInit {
   }
 
   onClick() {
-    this.eventsService.getAllEvents().subscribe();
+    this.events$ = this.eventsService.getAllEvents();
   }
 }

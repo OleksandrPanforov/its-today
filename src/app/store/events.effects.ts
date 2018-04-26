@@ -16,7 +16,7 @@ export class EventsEffects {
     private eventsService: EventsService
     ) { }
 
-  @Effect()
+/*   @Effect()
   getEvents$: Observable<Action> = this.$actions
     .ofType<actions.GetEvents>(actions.GET_EVENTS)
     .pipe(
@@ -28,5 +28,5 @@ export class EventsEffects {
             : new actions.GetEventsSuccess(result.body)
         )
       ))
-    );
+    ); */
 }

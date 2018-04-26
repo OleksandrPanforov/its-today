@@ -12,7 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { EventsEffects } from './store/events.effects';
 import { eventsReducer } from './store/events.reducer';
 import { DevApiPath } from './dependencyInjection/tokens';
-
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { DevApiPath } from './dependencyInjection/tokens';
   imports: [
     BrowserModule,
     HttpClientModule,
+    DragulaModule,
     StoreModule.forRoot(reducers),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([ EventsEffects ]),
