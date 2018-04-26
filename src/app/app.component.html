@@ -1,5 +1,10 @@
 Events, various and great
-<app-timeline [events]="newEvent">
+<app-timeline [events]="newEvent" (nextCard)="onNextCard()">
 
 </app-timeline>
-<a (click)="onClick()"> ONE MORE</a>
+<a *ngIf="!started" (click)="onClick()"> START</a>
+
+
+<div *ngIf="gameOver">
+  Game over
+</div>

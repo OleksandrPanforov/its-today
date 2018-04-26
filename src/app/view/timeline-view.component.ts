@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Event } from '../models/event';
 import { DragulaService, dragula } from 'ng2-dragula/ng2-dragula';
 import { GameModes } from '../models/gameModes';
@@ -14,7 +14,13 @@ export class TimelineComponent implements OnInit {
   @Input() timeline: Event[] = [];
   @Input() gameMode = GameModes.ByOne;
 
+  @Output() nextCard: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(private dragulaService: DragulaService) {
+
+  }
+
+  ngOnInit() {
     this.dragulaService.setOptions('bag-one', {
       accepts: (el, target, source, sibling) => {
         if (target.id === 'new_card') {
@@ -23,29 +29,26 @@ export class TimelineComponent implements OnInit {
         }
         return true;
       },
-      copy: true
+      copy: true,
+      direction: 'vertical'
     });
 
-    dragulaService.drag.subscribe((value) => {
+    this.dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));
     });
-    dragulaService.drop.subscribe((value) => {
+    this.dragulaService.drop.subscribe((value) => {
       console.log(`drop: ${value[0]}`);
       this.onDrop(value.slice(1));
     });
-    dragulaService.over.subscribe((value) => {
+    this.dragulaService.over.subscribe((value) => {
       console.log(`over: ${value[0]}`);
       this.onOver(value.slice(1));
     });
-    dragulaService.out.subscribe((value) => {
+    this.dragulaService.out.subscribe((value) => {
       console.log(`out: ${value[0]}`);
       this.onOut(value.slice(1));
     });
-  }
-
-  ngOnInit() {
-
   }
 
   private onDrag(args) {
@@ -55,7 +58,8 @@ export class TimelineComponent implements OnInit {
 
   private onDrop(args) {
     let [e, el] = args;
-    // do something
+    this.events = [];
+    this.nextCard.emit();
   }
 
   private onOver(args) {
