@@ -1,9 +1,13 @@
-
-  <div class="container" [dragula]='"bag-one"' id="timeline" [dragulaModel]='events'>
-    <div *ngFor="let event of events" class="card" [innerHTML]="event.html"></div>
+<div class="container" [dragula]='"bag-one"' id="timeline">
+  <div *ngFor="let event of timeline" class="card">
+    <div [innerHTML]="event.html"></div>
+    <div> {{event.year}}</div>
   </div>
+</div>
 
-  <div class="container" [dragula]='"bag-one"' id="new_card" [dragulaModel]='events'>
-    <div *ngFor="let event of events2" class="card" [innerHTML]="event.html"></div>
+<div class="container" [dragula]='"bag-one"' id="new_card">
+  <div *ngFor="let event of events" class="card">
+    <div [innerHTML]="event.html"></div>
+    <div> {{event.year}}</div>
   </div>
-
+</div>

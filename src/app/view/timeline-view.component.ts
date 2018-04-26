@@ -1,34 +1,18 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Event } from '../models/event';
 import { DragulaService, dragula } from 'ng2-dragula/ng2-dragula';
+import { GameModes } from '../models/gameModes';
 
 @Component({
   selector: 'app-timeline',
   templateUrl: './timeline-view.component.html',
   styleUrls: ['./timeline-view.component.css', '../../../node_modules/dragula/dist/dragula.css']
 })
-export class TimelineComponent {
+export class TimelineComponent implements OnInit {
   @Input() title: string;
-  @Input() events: Event[];
-  events2: Event[] = [{
-    'year': '1792',
-    'text': 'Highwayman Nicolas J. Pelletier becomes the first person executed by guillotine.',
-    'html': '<a href="https://wikipedia.org/wiki/Highwayman" title="Highwayman">Highwayman</a> <a href="https://wikipedia.org/wiki/Nicolas_Jacques_Pelletier" title="Nicolas Jacques Pelletier">Nicolas J. Pelletier</a> becomes the first person executed by <a href="https://wikipedia.org/wiki/Guillotine" title="Guillotine">guillotine</a>.',
-    'links': [
-      {
-        'title': 'Highwayman',
-        'link': 'https://wikipedia.org/wiki/Highwayman'
-      },
-      {
-        'title': 'Nicolas Jacques Pelletier',
-        'link': 'https://wikipedia.org/wiki/Nicolas_Jacques_Pelletier'
-      },
-      {
-        'title': 'Guillotine',
-        'link': 'https://wikipedia.org/wiki/Guillotine'
-      }
-    ]
-  }];
+  @Input() events: Event[] = [];
+  @Input() timeline: Event[] = [];
+  @Input() gameMode = GameModes.ByOne;
 
   constructor(private dragulaService: DragulaService) {
     this.dragulaService.setOptions('bag-one', {
@@ -38,7 +22,8 @@ export class TimelineComponent {
           return false;
         }
         return true;
-      }
+      },
+      copy: true
     });
 
     dragulaService.drag.subscribe((value) => {
@@ -57,6 +42,10 @@ export class TimelineComponent {
       console.log(`out: ${value[0]}`);
       this.onOut(value.slice(1));
     });
+  }
+
+  ngOnInit() {
+
   }
 
   private onDrag(args) {

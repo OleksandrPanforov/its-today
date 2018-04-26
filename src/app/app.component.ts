@@ -20,14 +20,19 @@ import { EventsResponse } from './models/eventsResponse';
 })
 export class AppComponent implements OnInit {
 
-  events$: Event[];
+  allEvents: Event[];
+  newEvent: Event[];
 
-  constructor(private store: Store<fromEvents.State>, private eventsService: EventsService) {}
+  constructor(private store: Store<fromEvents.State>, private eventsService: EventsService) { }
 
   ngOnInit() {
+    this.allEvents = this.eventsService.getAllEvents();
   }
 
   onClick() {
-    this.events$ = this.eventsService.getAllEvents();
+    if (this.allEvents.length > 0) {
+      this.newEvent = [this.allEvents[Math.floor(Math.random() * this.allEvents.length)]];
+      this.allEvents.splice(this.allEvents.indexOf(this.newEvent[0]), 1);
+    }
   }
 }
