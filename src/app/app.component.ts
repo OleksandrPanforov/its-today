@@ -20,28 +20,30 @@ import { EventsResponse } from './models/eventsResponse';
 })
 export class AppComponent implements OnInit {
 
-  allEvents: Event[];
+  allEvents: Event[] = [];
   newEvent: Event[];
   started = false;
   gameOver = false;
 
-  constructor(private store: Store<fromEvents.State>, private eventsService: EventsService) { }
+  constructor(private store: Store<fromEvents.State>, private eventsService: EventsService) {
+    this.eventsService.getAllEvents().subscribe(result => this.allEvents = result);
+  }
 
   ngOnInit() {
-    this.allEvents = this.eventsService.getAllEvents();
+
   }
 
-  onNextCard() {
-    if (this.allEvents.length > 0) {
-      this.newEvent = [this.allEvents[Math.floor(Math.random() * this.allEvents.length)]];
-      this.allEvents.splice(this.allEvents.indexOf(this.newEvent[0]), 1);
-    } else {
-      this.gameOver = true;
-    }
+onNextCard() {
+  if (this.allEvents.length > 0) {
+    this.newEvent = [this.allEvents[Math.floor(Math.random() * this.allEvents.length)]];
+    this.allEvents.splice(this.allEvents.indexOf(this.newEvent[0]), 1);
+  } else {
+    this.gameOver = true;
   }
+}
 
-  onClick() {
-    this.onNextCard();
-    this.started = true;
-  }
+onClick() {
+  this.onNextCard();
+  this.started = true;
+}
 }
